@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NormalizeFormUtil.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pos-main</a> &gt; <a href="index.source.html" class="el_package">com.increff.pos.util</a> &gt; <span class="el_source">NormalizeFormUtil.java</span></div><h1>NormalizeFormUtil.java</h1><pre class="source lang-java linenums">package com.increff.pos.util;
+
+import com.increff.pos.model.form.*;
+
+<span class="nc" id="L5">public class NormalizeFormUtil {</span>
+    public static void normalizeBrandForm(BrandForm brandForm) {
+<span class="fc" id="L7">        brandForm.setBrand(brandForm.getBrand().trim().toLowerCase());</span>
+<span class="fc" id="L8">        brandForm.setCategory(brandForm.getCategory().trim().toLowerCase());</span>
+<span class="fc" id="L9">    }</span>
+
+    public static void normalizeInventoryForm(InventoryForm inventoryForm) {
+<span class="fc" id="L12">        inventoryForm.setBarcode(inventoryForm.getBarcode().trim().toLowerCase());</span>
+<span class="fc" id="L13">    }</span>
+
+    public static void normalizeProductForm(ProductForm productForm) {
+<span class="fc" id="L16">        productForm.setName(productForm.getName().trim().toLowerCase());</span>
+<span class="fc" id="L17">        productForm.setBarcode(productForm.getBarcode().trim().toLowerCase());</span>
+<span class="fc" id="L18">        productForm.setBrand(productForm.getBrand().trim().toLowerCase());</span>
+<span class="fc" id="L19">        productForm.setCategory(productForm.getCategory().trim().toLowerCase());</span>
+<span class="fc" id="L20">    }</span>
+
+    public static void normalizeOrderItemsForm(OrderItemsForm orderItemsForm) {
+<span class="fc" id="L23">        orderItemsForm.setBarcode(orderItemsForm.getBarcode().trim().toLowerCase());</span>
+<span class="fc" id="L24">    }</span>
+
+    public static void normalizeUserForm(UserForm userForm) {
+<span class="fc" id="L27">        userForm.setEmail(userForm.getEmail().trim().toLowerCase());</span>
+<span class="fc" id="L28">        userForm.setPassword(userForm.getPassword().toLowerCase());</span>
+<span class="fc" id="L29">    }</span>
+
+    public static void normalizeSalesReportForm(SalesReportForm salesReportForm) {
+<span class="fc" id="L32">        salesReportForm.setBrand(salesReportForm.getBrand().trim().toLowerCase());</span>
+<span class="fc" id="L33">        salesReportForm.setCategory(salesReportForm.getCategory().trim().toLowerCase());</span>
+<span class="fc" id="L34">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

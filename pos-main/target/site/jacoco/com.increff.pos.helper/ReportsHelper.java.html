@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReportsHelper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pos-main</a> &gt; <a href="index.source.html" class="el_package">com.increff.pos.helper</a> &gt; <span class="el_source">ReportsHelper.java</span></div><h1>ReportsHelper.java</h1><pre class="source lang-java linenums">package com.increff.pos.helper;
+
+import com.increff.pos.model.data.BrandReportData;
+import com.increff.pos.model.data.DailyReportData;
+import com.increff.pos.model.data.InventoryReportData;
+import com.increff.pos.model.data.SalesReportData;
+import com.increff.pos.model.form.BrandForm;
+import com.increff.pos.model.form.DailyReportForm;
+import com.increff.pos.model.form.SalesReportForm;
+import com.increff.pos.model.xml.BrandReportXmlList;
+import com.increff.pos.model.xml.DailyReportXmlList;
+import com.increff.pos.model.xml.InventoryReportXmlList;
+import com.increff.pos.model.xml.SalesReportXmlList;
+
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+<span class="nc" id="L20">public class ReportsHelper {</span>
+
+    public static SalesReportXmlList convertToSalesReportDataList(List&lt;SalesReportData&gt; salesReportDataList, SalesReportForm salesReportForm) {
+<span class="fc" id="L23">        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd&quot;);</span>
+<span class="fc" id="L24">        SalesReportXmlList salesReportXmlList = new SalesReportXmlList();</span>
+<span class="fc" id="L25">        salesReportXmlList.setBrand(salesReportForm.getBrand());</span>
+<span class="fc" id="L26">        salesReportXmlList.setCategory(salesReportForm.getCategory());</span>
+<span class="pc bpc" id="L27" title="1 of 2 branches missed.">        if (salesReportXmlList.getBrand() == &quot;&quot;) salesReportXmlList.setBrand(&quot;all brands&quot;);</span>
+<span class="pc bpc" id="L28" title="1 of 2 branches missed.">        if (salesReportXmlList.getCategory() == &quot;&quot;) salesReportXmlList.setCategory(&quot;all categories&quot;);</span>
+<span class="fc" id="L29">        salesReportXmlList.setFromDate(salesReportForm.getFrom().format(formatter));</span>
+<span class="fc" id="L30">        salesReportXmlList.setToDate(salesReportForm.getTo().format(formatter));</span>
+<span class="fc" id="L31">        salesReportXmlList.setSalesReportDataList(salesReportDataList);</span>
+<span class="fc" id="L32">        return salesReportXmlList;</span>
+    }
+
+    public static InventoryReportXmlList convertToInventoryReportXmlList(List&lt;InventoryReportData&gt; inventoryPojoList, BrandForm brandForm) {
+<span class="fc" id="L36">        ZonedDateTime date = ZonedDateTime.now(ZoneId.systemDefault());</span>
+<span class="fc" id="L37">        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd, hh:mm:ss&quot;);</span>
+<span class="fc" id="L38">        InventoryReportXmlList inventoryReportXmlList = new InventoryReportXmlList();</span>
+<span class="fc" id="L39">        inventoryReportXmlList.setDatetime(date.format(formatter));</span>
+<span class="fc" id="L40">        inventoryReportXmlList.setInventoryReportData(inventoryPojoList);</span>
+<span class="fc" id="L41">        inventoryReportXmlList.setBrand(brandForm.getBrand());</span>
+<span class="fc" id="L42">        inventoryReportXmlList.setCategory(brandForm.getCategory());</span>
+<span class="pc bpc" id="L43" title="1 of 2 branches missed.">        if (inventoryReportXmlList.getBrand() == &quot;&quot;) {</span>
+<span class="fc" id="L44">            inventoryReportXmlList.setBrand(&quot;all brands&quot;);</span>
+        }
+<span class="pc bpc" id="L46" title="1 of 2 branches missed.">        if (inventoryReportXmlList.getCategory() == &quot;&quot;) {</span>
+<span class="fc" id="L47">            inventoryReportXmlList.setCategory(&quot;all categories&quot;);</span>
+        }
+<span class="fc" id="L49">        return inventoryReportXmlList;</span>
+    }
+
+    public static DailyReportXmlList convertToDailyReportXmlList(List&lt;DailyReportData&gt; dailyReportDataList, DailyReportForm dailyReportForm) {
+<span class="fc" id="L53">        DailyReportXmlList dailyReportXmlList = new DailyReportXmlList();</span>
+<span class="fc" id="L54">        dailyReportXmlList.setFromDate(dailyReportForm.getFrom());</span>
+<span class="fc" id="L55">        dailyReportXmlList.setToDate(dailyReportForm.getTo());</span>
+<span class="fc" id="L56">        dailyReportXmlList.setDailyReportDataList(dailyReportDataList);</span>
+<span class="fc" id="L57">        return dailyReportXmlList;</span>
+    }
+
+    public static BrandReportXmlList convertToBrandReportXmlList(List&lt;BrandReportData&gt; brandReportDataList, BrandForm brandForm) {
+<span class="fc" id="L61">        ZonedDateTime date = ZonedDateTime.now(ZoneId.systemDefault());</span>
+<span class="fc" id="L62">        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd, hh:mm:ss&quot;);</span>
+<span class="fc" id="L63">        BrandReportXmlList brandReportXmlList = new BrandReportXmlList();</span>
+<span class="fc" id="L64">        brandReportXmlList.setBrand(brandForm.getBrand());</span>
+<span class="fc" id="L65">        brandReportXmlList.setCategory(brandForm.getCategory());</span>
+<span class="fc" id="L66">        brandReportXmlList.setDatetime(date.format(formatter));</span>
+<span class="fc" id="L67">        brandReportXmlList.setBrandReportData(brandReportDataList);</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">        if (brandReportXmlList.getBrand() == &quot;&quot;) {</span>
+<span class="fc" id="L69">            brandReportXmlList.setBrand(&quot;all brands&quot;);</span>
+        }
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">        if (brandReportXmlList.getCategory() == &quot;&quot;) {</span>
+<span class="fc" id="L72">            brandReportXmlList.setCategory(&quot;all categories&quot;);</span>
+        }
+<span class="fc" id="L74">        return brandReportXmlList;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

@@ -1,0 +1,90 @@
+<!doctype html>
+
+<html lang="en">
+
+<head th:replace="snippets.html :: name_head"></head>
+
+<body onload="check()">
+
+<nav th:replace="snippets.html :: name_site_navbar"></nav>
+
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-8">
+            <div class="jumbotron">
+                <h1 class="display-4" style="font-size: 50px;font-weight: bolder;">Welcome to POS </h1>
+                <p class="lead">Sale Made Easy</p>
+                <hr class="my-4">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card" style="height: 100%;">
+                            <div class="card-body" style="font-size: x-large;font-weight: inherit;">
+                                <p class="card-text">➡ Inventory Management</p>
+                                <p class="card-text">➡ Create orders and generate invoice for the orders</p>
+                                <p class="card-text">➡ Generate reports easy and fast</p>
+                                <p class="card-text">➡ Track your day to day sales</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4" style="padding-top:100px;">
+
+            <div class="card">
+                <div class="card-header">
+                    Sign up
+                </div>
+                <div class="card-body">
+                    <form class="form" id="login-form" method="POST" th:action="@{/session/signup}">
+                        <div class="form-group">
+                            <label for="email" class="col-sm-10 col-form-label">Email</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="email" id="email" placeholder="enter email" style="padding: 10px;">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="col-sm-10 col-form-label">Password</label>
+                            <div class="col-sm-10">
+                                <input type="password" name="password" id="password" placeholder="enter password" style="padding: 10px;">
+                                <i class="far fa-eye" id="togglePassword" style="margin-left: -30px; cursor: pointer;" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="signup">Sign up</button>
+                        Already a user ? <a th:href="@{/site/login}"> Log in </a>
+                    </form>
+                </div>
+                <div id="msg" class="card-footer text-danger">
+
+                </div>
+
+            </div>
+
+
+        </div> <!-- Col -->
+    </div> <!-- Row -->
+
+</div> <!-- Container-->
+
+</body>
+<script>
+    function check() {
+        if("[[${info.getType()}]]" == "Signup") {
+            document.getElementById("msg").innerHTML = "[[${info.getMessage()}]]";
+        }
+    }
+
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#password');
+
+    togglePassword.addEventListener('click', function (e) {
+    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+    password.setAttribute('type', type);
+    this.classList.toggle('fa-eye-slash');
+});
+
+</script>
+
+</html>

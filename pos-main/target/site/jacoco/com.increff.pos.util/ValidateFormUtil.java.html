@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ValidateFormUtil.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pos-main</a> &gt; <a href="index.source.html" class="el_package">com.increff.pos.util</a> &gt; <span class="el_source">ValidateFormUtil.java</span></div><h1>ValidateFormUtil.java</h1><pre class="source lang-java linenums">package com.increff.pos.util;
+
+import com.increff.pos.exception.ApiException;
+import com.increff.pos.model.form.*;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static java.util.Objects.isNull;
+
+<span class="nc" id="L15">public class ValidateFormUtil {</span>
+
+    public static void validateBrandForm(BrandForm brandForm) throws ApiException {
+<span class="pc bpc" id="L18" title="1 of 2 branches missed.">        if (isNull(brandForm.getBrand())) {</span>
+<span class="nc" id="L19">            throw new ApiException(&quot;The brand field can't be null&quot;);</span>
+        }
+<span class="pc bpc" id="L21" title="1 of 2 branches missed.">        if (isNull(brandForm.getCategory())) {</span>
+<span class="nc" id="L22">            throw new ApiException(&quot;The category field can't be null&quot;);</span>
+        }
+<span class="pc bpc" id="L24" title="1 of 2 branches missed.">        if (brandForm.getBrand().trim().isEmpty()) {</span>
+<span class="nc" id="L25">            throw new ApiException(&quot;Please enter valid brand&quot;);</span>
+        }
+<span class="pc bpc" id="L27" title="1 of 2 branches missed.">        if (brandForm.getCategory().trim().isEmpty()) {</span>
+<span class="nc" id="L28">            throw new ApiException(&quot;Please enter valid category&quot;);</span>
+        }
+<span class="pc bpc" id="L30" title="1 of 2 branches missed.">        if(!isValidWord(brandForm.getBrand().trim())) {</span>
+<span class="nc" id="L31">            throw new ApiException(&quot;Brand field should not contain special characters&quot;);</span>
+        }
+<span class="pc bpc" id="L33" title="1 of 2 branches missed.">        if(!isValidWord(brandForm.getCategory().trim())) {</span>
+<span class="nc" id="L34">            throw new ApiException(&quot;Category field should not contain special characters&quot;);</span>
+        }
+<span class="pc bpc" id="L36" title="1 of 2 branches missed.">        if(brandForm.getBrand().trim().length() &gt; 20) {</span>
+<span class="nc" id="L37">            throw new ApiException(&quot;Brand length should be less than 20&quot;);</span>
+        }
+<span class="pc bpc" id="L39" title="1 of 2 branches missed.">        if(brandForm.getCategory().trim().length() &gt; 20) {</span>
+<span class="nc" id="L40">            throw new ApiException(&quot;Category length should be less than 20&quot;);</span>
+        }
+<span class="fc" id="L42">    }</span>
+
+    public static void validateInventoryForm(InventoryForm inventoryForm) throws ApiException {
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">        if (isNull(inventoryForm.getBarcode())) {</span>
+<span class="nc" id="L46">            throw new ApiException(&quot;The barcode field can't be null&quot;);</span>
+        }
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">        if (isNull(inventoryForm.getQuantity())) {</span>
+<span class="nc" id="L49">            throw new ApiException(&quot;The quantity field can't be null&quot;);</span>
+        }
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">        if (inventoryForm.getBarcode().trim().isEmpty()) {</span>
+<span class="nc" id="L52">            throw new ApiException(&quot;Please enter valid barcode&quot;);</span>
+        }
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">        if (inventoryForm.getQuantity() &lt; 0 ) {</span>
+<span class="nc" id="L55">            throw new ApiException(&quot;Quantity cannot be negative&quot;);</span>
+        }
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">        if(!isValidWord(inventoryForm.getBarcode().trim())) {</span>
+<span class="nc" id="L58">            throw new ApiException(&quot;Barcode field should not contain special characters&quot;);</span>
+        }
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">        if(inventoryForm.getBarcode().trim().length() &gt; 20) {</span>
+<span class="nc" id="L61">            throw new ApiException(&quot;Barcode length should be less than 20&quot;);</span>
+        }
+<span class="fc" id="L63">    }</span>
+
+    public static void validateProductForm(ProductForm productForm) throws ApiException {
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">        if (isNull(productForm.getBarcode())) {</span>
+<span class="nc" id="L67">            throw new ApiException(&quot;The barcode field can't be null&quot;);</span>
+        }
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">        if (isNull(productForm.getBrand())) {</span>
+<span class="nc" id="L70">            throw new ApiException(&quot;The brand field can't be null&quot;);</span>
+        }
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">        if (isNull(productForm.getCategory())) {</span>
+<span class="nc" id="L73">            throw new ApiException(&quot;The category field can't be null&quot;);</span>
+        }
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">        if (isNull(productForm.getName())) {</span>
+<span class="nc" id="L76">            throw new ApiException(&quot;The name field can't be null&quot;);</span>
+        }
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">        if (isNull(productForm.getMrp())) {</span>
+<span class="nc" id="L79">            throw new ApiException(&quot;The mrp field can't be null&quot;);</span>
+        }
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">        if (productForm.getBarcode().trim().isEmpty()) {</span>
+<span class="nc" id="L82">            throw new ApiException(&quot;Please enter valid barcode&quot;);</span>
+        }
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">        if (productForm.getName().trim().isEmpty()) {</span>
+<span class="nc" id="L85">            throw new ApiException(&quot;Please enter valid name&quot;);</span>
+        }
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">        if (productForm.getMrp() &lt;= 0.0d) {</span>
+<span class="nc" id="L88">            throw new ApiException(&quot;MRP cannot be negative or zero&quot;);</span>
+        }
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">        if (productForm.getBrand().trim().isEmpty()) {</span>
+<span class="nc" id="L91">            throw new ApiException(&quot;Please enter valid brand&quot;);</span>
+        }
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">        if (productForm.getCategory().trim().isEmpty()) {</span>
+<span class="nc" id="L94">            throw new ApiException(&quot;Please enter valid category&quot;);</span>
+        }
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">        if(!isValidWord(productForm.getBrand().trim())) {</span>
+<span class="nc" id="L97">            throw new ApiException(&quot;Brand field should not contain special characters&quot;);</span>
+        }
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">        if(!isValidWord(productForm.getCategory().trim())) {</span>
+<span class="nc" id="L100">            throw new ApiException(&quot;Category field should not contain special characters&quot;);</span>
+        }
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">        if(!isValidWord(productForm.getBarcode().trim())) {</span>
+<span class="nc" id="L103">            throw new ApiException(&quot;Barcode field should not contain special characters&quot;);</span>
+        }
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">        if(!isValidWord(productForm.getName().trim())) {</span>
+<span class="nc" id="L106">            throw new ApiException(&quot;Name field should not contain special characters&quot;);</span>
+        }
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">        if(productForm.getBrand().trim().length() &gt; 20) {</span>
+<span class="nc" id="L109">            throw new ApiException(&quot;Brand length should be less than 20&quot;);</span>
+        }
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">        if(productForm.getCategory().trim().length() &gt; 20) {</span>
+<span class="nc" id="L112">            throw new ApiException(&quot;Category length should be less than 20&quot;);</span>
+        }
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">        if(productForm.getBarcode().trim().length() &gt; 20) {</span>
+<span class="nc" id="L115">            throw new ApiException(&quot;Barcode length should be less than 20&quot;);</span>
+        }
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">        if(productForm.getName().trim().length() &gt; 30) {</span>
+<span class="nc" id="L118">            throw new ApiException(&quot;Name length should be less than 30&quot;);</span>
+        }
+<span class="fc" id="L120">    }</span>
+
+    public static void validateOrderItemsForm(OrderItemsForm orderItemsForm) throws ApiException {
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">        if (isNull(orderItemsForm.getBarcode())) {</span>
+<span class="nc" id="L124">            throw new ApiException(&quot;The barcode field can't be null&quot;);</span>
+        }
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">        if (isNull(orderItemsForm.getQuantity())) {</span>
+<span class="nc" id="L127">            throw new ApiException(&quot;The quantity field can't be null&quot;);</span>
+        }
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">        if (isNull(orderItemsForm.getSellingPrice())) {</span>
+<span class="nc" id="L130">            throw new ApiException(&quot;The selling price field can't be null&quot;);</span>
+        }
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">        if (orderItemsForm.getBarcode().trim().isEmpty()) {</span>
+<span class="nc" id="L133">            throw new ApiException(&quot;Please enter valid barcode&quot;);</span>
+        }
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">        if (orderItemsForm.getQuantity() &lt;= 0) {</span>
+<span class="nc" id="L136">            throw new ApiException(&quot;Quantity cannot be negative or zero&quot;);</span>
+        }
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">        if (orderItemsForm.getSellingPrice() &lt;= 0.0d) {</span>
+<span class="nc" id="L139">            throw new ApiException(&quot;Price cannot be negative or zero&quot;);</span>
+        }
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">        if(!isValidWord(orderItemsForm.getBarcode().trim())) {</span>
+<span class="nc" id="L142">            throw new ApiException(&quot;Barcode field should not contain special characters&quot;);</span>
+        }
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">        if(orderItemsForm.getBarcode().trim().length() &gt; 20) {</span>
+<span class="nc" id="L145">            throw new ApiException(&quot;Barcode length should be less than 20&quot;);</span>
+        }
+<span class="fc" id="L147">    }</span>
+
+    public static void validateUserForm(UserForm userForm) throws ApiException {
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">        if (isNull(userForm.getEmail())) {</span>
+<span class="nc" id="L151">            throw new ApiException(&quot;The email field can't be null&quot;);</span>
+        }
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">        if (isNull(userForm.getPassword())) {</span>
+<span class="nc" id="L154">            throw new ApiException(&quot;The password field can't be null&quot;);</span>
+        }
+<span class="pc bpc" id="L156" title="2 of 4 branches missed.">        if (userForm.getEmail().trim().isEmpty() || !isValidEmail(userForm.getEmail().trim())) {</span>
+<span class="nc" id="L157">            throw new ApiException(&quot;Please enter valid email address&quot;);</span>
+        }
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">        if (userForm.getPassword().isEmpty()) {</span>
+<span class="nc" id="L160">            throw new ApiException(&quot;Please enter valid password&quot;);</span>
+        }
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">        if (userForm.getPassword().trim().length() &lt; 7) {</span>
+<span class="nc" id="L163">            throw new ApiException(&quot;Password should contains at least 7 characters&quot;);</span>
+        }
+<span class="fc" id="L165">    }</span>
+
+    public static void validateLoginForm(UserForm userForm) throws ApiException {
+<span class="nc bnc" id="L168" title="All 2 branches missed.">        if (isNull(userForm.getEmail())) {</span>
+<span class="nc" id="L169">            throw new ApiException(&quot;The email field can't be null&quot;);</span>
+        }
+<span class="nc bnc" id="L171" title="All 2 branches missed.">        if (isNull(userForm.getPassword())) {</span>
+<span class="nc" id="L172">            throw new ApiException(&quot;The password field can't be null&quot;);</span>
+        }
+<span class="nc bnc" id="L174" title="All 4 branches missed.">        if (userForm.getEmail().trim().isEmpty() || !isValidEmail(userForm.getEmail().trim())) {</span>
+<span class="nc" id="L175">            throw new ApiException(&quot;Please enter valid email address&quot;);</span>
+        }
+<span class="nc bnc" id="L177" title="All 2 branches missed.">        if (userForm.getPassword().isEmpty()) {</span>
+<span class="nc" id="L178">            throw new ApiException(&quot;Please enter valid password&quot;);</span>
+        }
+<span class="nc" id="L180">    }</span>
+
+    public static void validateSalesForm(SalesReportForm salesReportForm) throws ApiException {
+<span class="pc bpc" id="L183" title="1 of 2 branches missed.">        if (isNull(salesReportForm.getBrand())) {</span>
+<span class="nc" id="L184">            throw new ApiException(&quot;The brand field can't be null&quot;);</span>
+        }
+<span class="pc bpc" id="L186" title="1 of 2 branches missed.">        if (isNull(salesReportForm.getCategory())) {</span>
+<span class="nc" id="L187">            throw new ApiException(&quot;The category field can't be null&quot;);</span>
+        }
+<span class="pc bpc" id="L189" title="1 of 2 branches missed.">        if (isNull(salesReportForm.getFrom())) {</span>
+<span class="nc" id="L190">            throw new ApiException(&quot;The from date field can't be null&quot;);</span>
+        }
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">        if (isNull(salesReportForm.getTo())) {</span>
+<span class="nc" id="L193">            throw new ApiException(&quot;The to date field can't be null&quot;);</span>
+        }
+<span class="pc bpc" id="L195" title="1 of 2 branches missed.">        if (ChronoUnit.DAYS.between(salesReportForm.getFrom(), salesReportForm.getTo()) &lt;= 0) {</span>
+<span class="nc" id="L196">            throw new ApiException(&quot;From date is greater than to date&quot;);</span>
+        }
+<span class="fc" id="L198">    }</span>
+
+    public static void validateDailyReportForm(DailyReportForm dailyReportForm) throws ApiException {
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">        if (dailyReportForm.getFrom() == null) {</span>
+<span class="nc" id="L202">            throw new ApiException(&quot;Please enter valid from date&quot;);</span>
+        }
+<span class="pc bpc" id="L204" title="1 of 2 branches missed.">        if (dailyReportForm.getTo() == null) {</span>
+<span class="nc" id="L205">            throw new ApiException(&quot;Please enter valid to date&quot;);</span>
+        }
+<span class="pc bpc" id="L207" title="1 of 2 branches missed.">        if (!isValidFormat(&quot;yyyy-mm-dd&quot;, dailyReportForm.getFrom())) {</span>
+<span class="nc" id="L208">            throw new ApiException(&quot;From date format is wrong, format should be 'yyyy-mm-dd'&quot;);</span>
+        }
+<span class="pc bpc" id="L210" title="1 of 2 branches missed.">        if (!isValidFormat(&quot;yyyy-mm-dd&quot;, dailyReportForm.getTo())) {</span>
+<span class="nc" id="L211">            throw new ApiException(&quot;To date format is wrong, format should be 'yyyy-mm-dd'&quot;);</span>
+        }
+<span class="pc bpc" id="L213" title="1 of 2 branches missed.">        if (dailyReportForm.getFrom().compareTo(dailyReportForm.getTo()) &gt; 0) {</span>
+<span class="nc" id="L214">            throw new ApiException(&quot;From date is greater than to date&quot;);</span>
+        }
+<span class="fc" id="L216">    }</span>
+
+    public static void validateInventoryReportForm(BrandForm brandForm) throws ApiException {
+<span class="pc bpc" id="L219" title="1 of 2 branches missed.">        if (isNull(brandForm.getBrand())) {</span>
+<span class="nc" id="L220">            throw new ApiException(&quot;The brand field can't be null&quot;);</span>
+        }
+<span class="pc bpc" id="L222" title="1 of 2 branches missed.">        if (isNull(brandForm.getCategory())) {</span>
+<span class="nc" id="L223">            throw new ApiException(&quot;The category field can't be null&quot;);</span>
+        }
+<span class="fc" id="L225">    }</span>
+
+    public static void validateBrandReportForm(BrandForm brandForm) throws ApiException {
+<span class="pc bpc" id="L228" title="1 of 2 branches missed.">        if (isNull(brandForm.getBrand())) {</span>
+<span class="nc" id="L229">            throw new ApiException(&quot;The brand field can't be null&quot;);</span>
+        }
+<span class="pc bpc" id="L231" title="1 of 2 branches missed.">        if (isNull(brandForm.getCategory())) {</span>
+<span class="nc" id="L232">            throw new ApiException(&quot;The category field can't be null&quot;);</span>
+        }
+<span class="fc" id="L234">    }</span>
+
+    public static boolean isValidFormat(String format, String value) {
+<span class="fc" id="L237">        Date date = null;</span>
+        try {
+<span class="fc" id="L239">            SimpleDateFormat sdf = new SimpleDateFormat(format);</span>
+<span class="fc" id="L240">            date = sdf.parse(value);</span>
+<span class="pc bpc" id="L241" title="1 of 2 branches missed.">            if (!value.equals(sdf.format(date))) {</span>
+<span class="nc" id="L242">                date = null;</span>
+            }
+<span class="nc" id="L244">        } catch (ParseException ex) {</span>
+<span class="nc" id="L245">            ex.printStackTrace();</span>
+<span class="fc" id="L246">        }</span>
+<span class="pc bpc" id="L247" title="1 of 2 branches missed.">        return date != null;</span>
+    }
+
+    public static Boolean isValidWord(String word){
+<span class="fc" id="L251">        Pattern pattern = Pattern.compile(&quot;^[a-zA-Z0-9\\s-\\s_]*$&quot;, Pattern.CASE_INSENSITIVE);</span>
+<span class="fc" id="L252">        Matcher matcher = pattern.matcher(word);</span>
+<span class="fc" id="L253">        return matcher.matches();</span>
+    }
+
+    public static boolean isValidEmail(String emailStr) {
+<span class="fc" id="L257">        Pattern pattern = Pattern.compile(&quot;^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$&quot;, Pattern.CASE_INSENSITIVE);</span>
+<span class="fc" id="L258">        Matcher matcher = pattern.matcher(emailStr);</span>
+<span class="fc" id="L259">        return matcher.matches();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

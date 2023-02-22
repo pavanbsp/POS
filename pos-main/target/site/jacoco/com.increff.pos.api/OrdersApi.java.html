@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrdersApi.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pos-main</a> &gt; <a href="index.source.html" class="el_package">com.increff.pos.api</a> &gt; <span class="el_source">OrdersApi.java</span></div><h1>OrdersApi.java</h1><pre class="source lang-java linenums">package com.increff.pos.api;
+
+import com.increff.pos.client.InvoiceClient;
+import com.increff.pos.dao.OrdersDao;
+import com.increff.pos.exception.ApiException;
+import com.increff.pos.model.xml.OrderInvoiceXmlList;
+import com.increff.pos.pojo.OrdersPojo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.time.ZonedDateTime;
+import java.util.List;
+
+@Service
+@Transactional(rollbackOn = ApiException.class)
+<span class="fc" id="L17">public class OrdersApi {</span>
+    @Autowired
+    private OrdersDao ordersDao;
+    @Autowired
+    private InvoiceClient invoiceClient;
+
+    public void addOrder(OrdersPojo ordersPojo) throws ApiException {
+<span class="fc" id="L24">        ordersDao.insertOrder(ordersPojo);</span>
+<span class="fc" id="L25">    }</span>
+
+    public void deleteOrder(int id) {
+<span class="fc" id="L28">        ordersDao.deleteOrder(id);</span>
+<span class="fc" id="L29">    }</span>
+
+    public OrdersPojo getOrder(int id) throws ApiException {
+<span class="fc" id="L32">        return getCheckOrder(id);</span>
+    }
+
+    public List&lt;OrdersPojo&gt; getAllOrders() {
+<span class="fc" id="L36">        return ordersDao.selectAllOrders();</span>
+    }
+
+    public List&lt;OrdersPojo&gt; selectByStatus(String status) {
+<span class="fc" id="L40">        return ordersDao.selectByOrderStatus(status);</span>
+    }
+
+    public List&lt;OrdersPojo&gt; selectByFromDate(ZonedDateTime from, ZonedDateTime to) {
+<span class="fc" id="L44">        return ordersDao.selectOrdersByFromDate(from, to);</span>
+    }
+
+    public void updateOrder(int id, OrdersPojo ordersPojo) throws ApiException {
+<span class="fc" id="L48">        OrdersPojo ordersPojoUpdated = getCheckOrder(id);</span>
+<span class="fc" id="L49">        ordersPojoUpdated.setStatus(ordersPojo.getStatus());</span>
+<span class="fc" id="L50">    }</span>
+
+    public OrdersPojo getCheckOrder(int id) throws ApiException {
+<span class="fc" id="L53">        OrdersPojo ordersPojo = ordersDao.selectOrder(id);</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">        if (ordersPojo == null) {</span>
+<span class="fc" id="L55">            throw new ApiException(&quot;Orders with given ID does not exist, id: &quot; + id);</span>
+        }
+<span class="fc" id="L57">        return ordersPojo;</span>
+    }
+
+    public String generateInvoicePdf(OrderInvoiceXmlList orderInvoiceXmlList) {
+<span class="fc" id="L61">        return invoiceClient.generateInvoice(orderInvoiceXmlList);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

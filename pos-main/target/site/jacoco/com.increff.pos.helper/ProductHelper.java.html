@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProductHelper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pos-main</a> &gt; <a href="index.source.html" class="el_package">com.increff.pos.helper</a> &gt; <span class="el_source">ProductHelper.java</span></div><h1>ProductHelper.java</h1><pre class="source lang-java linenums">package com.increff.pos.helper;
+
+import com.increff.pos.model.data.ProductData;
+import com.increff.pos.model.form.ProductForm;
+import com.increff.pos.pojo.BrandPojo;
+import com.increff.pos.pojo.ProductPojo;
+
+<span class="nc" id="L8">public class ProductHelper {</span>
+    public static ProductPojo convertProductFormtoProductPojo(ProductForm productForm) {
+<span class="fc" id="L10">        ProductPojo productPojo = new ProductPojo();</span>
+<span class="fc" id="L11">        productPojo.setMrp(productForm.getMrp());</span>
+<span class="fc" id="L12">        productPojo.setBarcode(productForm.getBarcode());</span>
+<span class="fc" id="L13">        productPojo.setName(productForm.getName());</span>
+<span class="fc" id="L14">        return productPojo;</span>
+    }
+
+    public static ProductData convertProductPojoToProductData(ProductPojo productPojo, BrandPojo brandPojo) {
+<span class="fc" id="L18">        ProductData productData = new ProductData();</span>
+<span class="fc" id="L19">        productData.setMrp(productPojo.getMrp());</span>
+<span class="fc" id="L20">        productData.setBarcode(productPojo.getBarcode());</span>
+<span class="fc" id="L21">        productData.setName(productPojo.getName());</span>
+<span class="fc" id="L22">        productData.setId(productPojo.getId());</span>
+<span class="fc" id="L23">        productData.setBrand(brandPojo.getBrand());</span>
+<span class="fc" id="L24">        productData.setCategory(brandPojo.getCategory());</span>
+<span class="fc" id="L25">        return productData;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

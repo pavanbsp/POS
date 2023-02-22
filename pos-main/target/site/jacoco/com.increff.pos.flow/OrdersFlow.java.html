@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrdersFlow.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pos-main</a> &gt; <a href="index.source.html" class="el_package">com.increff.pos.flow</a> &gt; <span class="el_source">OrdersFlow.java</span></div><h1>OrdersFlow.java</h1><pre class="source lang-java linenums">package com.increff.pos.flow;
+
+import com.increff.pos.api.InventoryApi;
+import com.increff.pos.api.OrderItemsApi;
+import com.increff.pos.api.OrdersApi;
+import com.increff.pos.api.ProductApi;
+import com.increff.pos.exception.ApiException;
+import com.increff.pos.model.data.OrderItemsData;
+import com.increff.pos.model.data.OrdersData;
+import com.increff.pos.model.form.OrderItemsForm;
+import com.increff.pos.model.xml.OrderInvoiceXmlList;
+import com.increff.pos.pojo.InventoryPojo;
+import com.increff.pos.pojo.OrderItemsPojo;
+import com.increff.pos.pojo.OrdersPojo;
+import com.increff.pos.pojo.ProductPojo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.*;
+
+import static com.increff.pos.helper.OrdersHelper.*;
+
+@Service
+@Transactional(rollbackOn = ApiException.class)
+<span class="fc" id="L26">public class OrdersFlow {</span>
+    @Autowired
+    private OrdersApi ordersApi;
+    @Autowired
+    private OrderItemsApi orderItemsApi;
+    @Autowired
+    private ProductApi productApi;
+    @Autowired
+    private InventoryApi inventoryApi;
+
+    public OrdersData addOrder(OrdersPojo ordersPojo, List&lt;OrderItemsForm&gt; orderItemsFormList) throws ApiException {
+<span class="pc bpc" id="L37" title="1 of 2 branches missed.">        if (orderItemsFormList.size() == 0) {</span>
+<span class="nc" id="L38">            throw new ApiException(&quot;Cannot place empty order&quot;);</span>
+        }
+<span class="fc" id="L40">        ordersApi.addOrder(ordersPojo);</span>
+        try {
+<span class="fc bfc" id="L42" title="All 2 branches covered.">            for (OrderItemsForm orderItemsForm : orderItemsFormList) {</span>
+<span class="fc" id="L43">                OrderItemsPojo orderItemsPojo = convertOrderItemsFormtoOrderItemsPojo(orderItemsForm);</span>
+<span class="fc" id="L44">                orderItemsPojo.setOrderId(ordersPojo.getId());</span>
+<span class="fc" id="L45">                addOrderItem(orderItemsPojo, orderItemsForm.getBarcode());</span>
+<span class="fc" id="L46">            }</span>
+<span class="nc" id="L47">        } catch (ApiException e) {</span>
+<span class="nc" id="L48">            throw new ApiException(&quot;Cannot place order, &quot; + e.getMessage());</span>
+<span class="fc" id="L49">        }</span>
+<span class="fc" id="L50">        return convertOrdersPojoToOrdersData(ordersPojo);</span>
+    }
+
+
+    public OrderInvoiceXmlList generateInvoiceList(int orderId) throws ApiException {
+<span class="fc" id="L55">        List&lt;OrderItemsPojo&gt; orderItemPojoList = orderItemsApi.getByOrderId(orderId);</span>
+        //Mapping product pojo to orderItem pojo which makes getting name of product easy for helper function
+<span class="fc" id="L57">        Map&lt;OrderItemsPojo, ProductPojo&gt; productPojoList = new HashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        for (OrderItemsPojo orderItemPojo : orderItemPojoList) {</span>
+<span class="fc" id="L59">            ProductPojo productPojo = productApi.getProduct(orderItemPojo.getProductId());</span>
+<span class="fc" id="L60">            productPojoList.put(orderItemPojo, productPojo);</span>
+<span class="fc" id="L61">        }</span>
+<span class="fc" id="L62">        OrderInvoiceXmlList orderInvoiceXmlList = convertToInvoiceDataList(orderItemPojoList, productPojoList, ordersApi.getOrder(orderItemPojoList.get(0).getOrderId()).getTime());</span>
+<span class="fc" id="L63">        OrdersPojo orderPojo = ordersApi.getOrder(orderId);</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">        if (Objects.equals(orderPojo.getStatus(), &quot;Not Invoiced&quot;)) {</span>
+<span class="fc" id="L65">            orderPojo.setStatus(&quot;Invoiced&quot;);</span>
+<span class="fc" id="L66">            ordersApi.updateOrder(orderId, orderPojo);</span>
+        }
+<span class="fc" id="L68">        return orderInvoiceXmlList;</span>
+    }
+
+    public void addOrderItem(OrderItemsPojo orderItemsPojo, String barcode) throws ApiException {
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">        if (!Objects.equals(ordersApi.getOrder(orderItemsPojo.getOrderId()).getStatus(), &quot;Not Invoiced&quot;)) {</span>
+<span class="nc" id="L73">            throw new ApiException(&quot;Cannot add order item because the order with given order id is already invoiced&quot;);</span>
+        }
+<span class="fc" id="L75">        ProductPojo productPojo = productApi.getCheckByBarcode(barcode);</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">        if (orderItemsPojo.getSellingPrice() &gt; productPojo.getMrp()) {</span>
+<span class="nc" id="L77">            throw new ApiException(&quot;Selling price cannot be greater than Mrp&quot;);</span>
+        }
+<span class="fc" id="L79">        orderItemsPojo.setProductId(productPojo.getId());</span>
+<span class="fc" id="L80">        checkUpdateInventory(orderItemsPojo.getProductId(), orderItemsPojo.getQuantity(), 0);</span>
+<span class="fc" id="L81">        orderItemsApi.addOrderItem(orderItemsPojo);</span>
+<span class="fc" id="L82">    }</span>
+
+    public void deleteOrderItem(int id) throws ApiException {
+<span class="fc" id="L85">        OrderItemsPojo orderItemsPojo = orderItemsApi.getOrderItem(id);</span>
+<span class="fc" id="L86">        checkUpdateInventory(orderItemsPojo.getProductId(), 0, orderItemsPojo.getQuantity());</span>
+<span class="fc" id="L87">        orderItemsApi.deleteOrderItem(id);</span>
+<span class="fc" id="L88">        checkDeleteOrder(orderItemsPojo.getOrderId());</span>
+<span class="fc" id="L89">    }</span>
+
+    public void checkDeleteOrder(int orderId) throws ApiException {
+<span class="fc" id="L92">        List&lt;OrderItemsPojo&gt; orderItemsPojoList = orderItemsApi.getByOrderId(orderId);</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">        if (orderItemsPojoList.size() == 0) {</span>
+<span class="fc" id="L94">            ordersApi.deleteOrder(orderId);</span>
+        }
+<span class="fc" id="L96">    }</span>
+
+    public OrderItemsData getOrderItem(int id) throws ApiException {
+<span class="fc" id="L99">        OrderItemsPojo orderItemsPojo = orderItemsApi.getOrderItem(id);</span>
+<span class="fc" id="L100">        ProductPojo productPojo = productApi.getCheckProductById(orderItemsPojo.getProductId());</span>
+<span class="fc" id="L101">        return convertOrderItemsPojoToOrderItemsData(orderItemsPojo, productPojo);</span>
+    }
+
+    public List&lt;OrderItemsData&gt; getOrderItemByOrderId(int orderId) throws ApiException {
+<span class="fc" id="L105">        List&lt;OrderItemsPojo&gt; orderItemsPojoList = orderItemsApi.getByOrderId(orderId);</span>
+<span class="fc" id="L106">        List&lt;OrderItemsData&gt; orderItemsDataList = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">        for (OrderItemsPojo orderItemsPojo : orderItemsPojoList) {</span>
+<span class="fc" id="L108">            ProductPojo productPojo = productApi.getCheckProductById(orderItemsPojo.getProductId());</span>
+<span class="fc" id="L109">            orderItemsDataList.add(convertOrderItemsPojoToOrderItemsData(orderItemsPojo, productPojo));</span>
+<span class="fc" id="L110">        }</span>
+<span class="fc" id="L111">        return orderItemsDataList;</span>
+    }
+
+    public List&lt;OrderItemsData&gt; getAllOrderItems() throws ApiException {
+<span class="fc" id="L115">        List&lt;OrderItemsPojo&gt; orderItemsPojoList = orderItemsApi.getAllOrderItems();</span>
+<span class="fc" id="L116">        List&lt;OrderItemsData&gt; orderItemsDataList = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">        for (OrderItemsPojo orderItemsPojo : orderItemsPojoList) {</span>
+<span class="fc" id="L118">            ProductPojo productPojo = productApi.getCheckProductById(orderItemsPojo.getProductId());</span>
+<span class="fc" id="L119">            orderItemsDataList.add(convertOrderItemsPojoToOrderItemsData(orderItemsPojo, productPojo));</span>
+<span class="fc" id="L120">        }</span>
+<span class="fc" id="L121">        return orderItemsDataList;</span>
+    }
+
+    public void updateOrderItem(int id, OrderItemsPojo orderItemsPojo, String barcode) throws ApiException {
+<span class="fc" id="L125">        ProductPojo productPojo = productApi.getCheckByBarcode(barcode);</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">        if (orderItemsPojo.getSellingPrice() &gt; productPojo.getMrp()) {</span>
+<span class="nc" id="L127">            throw new ApiException(&quot;Selling price cannot be greater than Mrp&quot;);</span>
+        }
+<span class="fc" id="L129">        OrderItemsPojo orderItemsPojoExists = orderItemsApi.getOrderItem(id);</span>
+<span class="fc" id="L130">        orderItemsPojo.setProductId(productPojo.getId());</span>
+<span class="fc" id="L131">        checkUpdateInventory(orderItemsPojo.getProductId(), orderItemsPojo.getQuantity(), orderItemsPojoExists.getQuantity());</span>
+<span class="fc" id="L132">        orderItemsApi.updateOrderItem(id, orderItemsPojo);</span>
+<span class="fc" id="L133">    }</span>
+
+
+    private void checkUpdateInventory(int productId, int quantity, int current_items) throws ApiException {
+<span class="fc" id="L137">        InventoryPojo inventoryPojo = inventoryApi.getInventory(productId);</span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">        if (quantity &gt; inventoryPojo.getQuantity() + current_items) {</span>
+<span class="nc" id="L139">            ProductPojo productPojo = productApi.getProduct(productId);</span>
+<span class="nc" id="L140">            throw new ApiException(&quot;Cannot add &quot; + productPojo.getName() + &quot; because items left in inventory is : &quot; + inventoryPojo.getQuantity());</span>
+        }
+<span class="fc" id="L142">        int remaining_items = inventoryPojo.getQuantity() - quantity;</span>
+<span class="fc" id="L143">        inventoryPojo.setQuantity(remaining_items + current_items);</span>
+<span class="fc" id="L144">        inventoryApi.updateInventory(productId, inventoryPojo);</span>
+<span class="fc" id="L145">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

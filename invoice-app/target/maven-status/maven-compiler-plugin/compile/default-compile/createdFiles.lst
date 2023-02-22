@@ -1,0 +1,17 @@
+invoiceApp\util\CreatePdf.class
+invoiceApp\model\xml\BrandReportXmlList.class
+invoiceApp\model\xml\SalesReportXmlList.class
+invoiceApp\model\data\OrderInvoiceData.class
+invoiceApp\model\data\DailyReportData.class
+invoiceApp\model\data\BrandReportData.class
+invoiceApp\spring\ControllerConfig.class
+invoiceApp\model\data\InventoryReportData.class
+invoiceApp\model\xml\OrderInvoiceXmlList.class
+invoiceApp\spring\SpringConfig.class
+invoiceApp\model\xml\InventoryReportXmlList.class
+invoiceApp\model\xml\DailyReportXmlList.class
+invoiceApp\service\GeneratePdfService.class
+invoiceApp\controller\GeneratePdfController.class
+invoiceApp\spring\WebInitializer.class
+invoiceApp\model\data\SalesReportData.class
+invoiceApp\util\CreateXmlFile.class

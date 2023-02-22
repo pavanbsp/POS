@@ -1,0 +1,58 @@
+<!doctype html>
+
+<html lang="en">
+
+<head th:replace="snippets.html :: name_head"></head>
+
+<body>
+
+<nav th:replace="snippets.html :: name_app_navbar"></nav>
+
+<div class="row" id="mainview" style="height: inherit;"> <!-- mainview.row.start -->
+    <div class="icon-bar"> <!-- icon.bar.start -->
+        <a class="active" th:href="@{/ui/home}" id="home"><i class="fa fa-home"></i><span id="bar-item">Home</span></a>
+        <a th:href="@{/ui/brand}" id="sale"><i class="fa fa-money"></i><span id="bar-item">Brand</span></a>
+        <a th:href="@{/ui/product}" id="products"><i class="fa fa-tag"></i><span id="bar-item">Products</span></a>
+        <a th:href="@{/ui/inventory}" id="products"><i class="fa fa-cart-plus"></i><span
+                id="bar-item">Inventory</span></a>
+        <a th:href="@{/ui/orders}" id="history"><i class="fa fa-file-text-o"></i><span
+                id="bar-item">Order</span></a>
+        <a class="dropdown-btn"><i class="fa fa-bar-chart" style="color: #007bff;"></i><span
+                id="bar-item">Reports</span></a>
+        <div id="right-drop" class="dropdown-menu" x-placement="right-start">
+            <a href="/pos/ui/dailyReport"><span id="bar-item">Daily Report</span></a>
+            <a href="/pos/ui/salesReport"><span id="bar-item">Sales</span></a>
+            <a href="/pos/ui/inventoryReport"><span id="bar-item">Inventory</span></a>
+            <a href="/pos/ui/brandReport"><span id="bar-item">Brand</span></a>
+        </div>
+    </div> <!-- icon.bar.end -->
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+
+                <div class="jumbotron">
+                    <h1 class="display-4" style="font-size: 70px;font-weight: bolder;">Welcome to POS </h1>
+                    <p class="lead">Sale Made Easy</p>
+                    <hr class="my-4">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card" style="height: 100%;">
+                                <div class="card-body" style="font-size: xx-large;font-weight: inherit;">
+                                    <p class="card-text">➡ Inventory Management</p>
+                                    <p class="card-text">➡ Create orders and generate invoice for the orders</p>
+                                    <p class="card-text">➡ Generate reports easy and fast</p>
+                                    <p class="card-text">➡ Track your day to day sales</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div> <!--Container-->
+</div>
+
+</body>
+
+</html>

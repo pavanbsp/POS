@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderItemsApi.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pos-main</a> &gt; <a href="index.source.html" class="el_package">com.increff.pos.api</a> &gt; <span class="el_source">OrderItemsApi.java</span></div><h1>OrderItemsApi.java</h1><pre class="source lang-java linenums">package com.increff.pos.api;
+
+import com.increff.pos.dao.OrderItemsDao;
+import com.increff.pos.exception.ApiException;
+import com.increff.pos.pojo.OrderItemsPojo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.List;
+
+@Service
+@Transactional(rollbackOn = ApiException.class)
+<span class="fc" id="L14">public class OrderItemsApi {</span>
+
+    @Autowired
+    private OrderItemsDao orderItemsDao;
+
+    public void addOrderItem(OrderItemsPojo orderItemsPojo) throws ApiException {
+<span class="fc" id="L20">        OrderItemsPojo orderItemsPojoExists = orderItemsDao.selectOrderItemByOrderId(orderItemsPojo.getOrderId(), orderItemsPojo.getProductId());</span>
+<span class="fc bfc" id="L21" title="All 2 branches covered.">        if (orderItemsPojoExists != null) {</span>
+<span class="fc bfc" id="L22" title="All 2 branches covered.">            if (orderItemsPojoExists.getSellingPrice() != orderItemsPojo.getSellingPrice()) {</span>
+<span class="fc" id="L23">                throw new ApiException(&quot;Order Item already exists with different selling price&quot;);</span>
+            }
+<span class="fc" id="L25">            orderItemsPojoExists.setQuantity(orderItemsPojo.getQuantity() + orderItemsPojoExists.getQuantity());</span>
+        } else {
+<span class="fc" id="L27">            orderItemsDao.insertOrderItem(orderItemsPojo);</span>
+        }
+<span class="fc" id="L29">    }</span>
+
+    public void deleteOrderItem(int id) throws ApiException {
+<span class="fc" id="L32">        orderItemsDao.deleteOrderItem(id);</span>
+<span class="fc" id="L33">    }</span>
+
+    public OrderItemsPojo getOrderItem(int id) throws ApiException {
+<span class="fc" id="L36">        return getCheckOrderItem(id);</span>
+    }
+
+    public List&lt;OrderItemsPojo&gt; getAllOrderItems() throws ApiException {
+<span class="fc" id="L40">        return orderItemsDao.selectAllOrderItems();</span>
+    }
+
+    public List&lt;OrderItemsPojo&gt; getFromOrderIdList(List&lt;Integer&gt; orderIdList) throws ApiException {
+<span class="fc" id="L44">        return orderItemsDao.selectFromOrderIdList(orderIdList);</span>
+    }
+
+    @Transactional
+    public List&lt;OrderItemsPojo&gt; getByOrderId(int orderId) throws ApiException {
+<span class="fc" id="L49">        return orderItemsDao.selectByOrderId(orderId);</span>
+    }
+
+    public void updateOrderItem(int id, OrderItemsPojo orderItemsPojo) throws ApiException {
+<span class="fc" id="L53">        OrderItemsPojo orderItemsPojoUpdated = getCheckOrderItem(id);</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">        if (orderItemsPojo.getOrderId() != orderItemsPojoUpdated.getOrderId()) {</span>
+<span class="fc" id="L55">            throw new ApiException(&quot;Cannot update OrderId of the orderItem&quot;);</span>
+        }
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        if (orderItemsPojo.getProductId() != orderItemsPojoUpdated.getProductId()) {</span>
+<span class="fc" id="L58">            throw new ApiException(&quot;Cannot update barcode of the orderItem&quot;);</span>
+        }
+<span class="fc" id="L60">        orderItemsPojoUpdated.setQuantity(orderItemsPojo.getQuantity());</span>
+<span class="fc" id="L61">        orderItemsPojoUpdated.setSellingPrice(orderItemsPojo.getSellingPrice());</span>
+<span class="fc" id="L62">    }</span>
+
+    public OrderItemsPojo getCheckOrderItem(int id) throws ApiException {
+<span class="fc" id="L65">        OrderItemsPojo orderItemsPojo = orderItemsDao.selectOrderItem(id);</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        if (orderItemsPojo == null) {</span>
+<span class="fc" id="L67">            throw new ApiException(&quot;OrderItems with given ID does not exist, id: &quot; + id);</span>
+        }
+<span class="fc" id="L69">        return orderItemsPojo;</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
