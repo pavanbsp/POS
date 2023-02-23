@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<items>
+    <fromDate>2023-01-23</fromDate>
+    <toDate>2023-02-22</toDate>
+    <brand>all brands</brand>
+    <category>all categories</category>
+    <item>
+        <brand>armani</brand>
+        <category>t-shirt</category>
+        <quantity>450</quantity>
+        <revenue>2132567.0</revenue>
+    </item>
+    <item>
+        <brand>trends</brand>
+        <category>footwear</category>
+        <quantity>1880</quantity>
+        <revenue>507501.0</revenue>
+    </item>
+    <item>
+        <brand>nestle</brand>
+        <category>chocolate</category>
+        <quantity>7</quantity>
+        <revenue>28.0</revenue>
+    </item>
+    <item>
+        <brand>cadbury</brand>
+        <category>dairy milk</category>
+        <quantity>1623</quantity>
+        <revenue>125272.0</revenue>
+    </item>
+    <item>
+        <brand>cadbury</brand>
+        <category>silk</category>
+        <quantity>1019</quantity>
+        <revenue>200171.0</revenue>
+    </item>
+    <item>
+        <brand>nestle</brand>
+        <category>dairy</category>
+        <quantity>170</quantity>
+        <revenue>2584.0</revenue>
+    </item>
+    <item>
+        <brand>nestle</brand>
+        <category>tea</category>
+        <quantity>200</quantity>
+        <revenue>10669.0</revenue>
+    </item>
+    <item>
+        <brand>dabur</brand>
+        <category>health</category>
+        <quantity>315</quantity>
+        <revenue>9125.0</revenue>
+    </item>
+    <item>
+        <brand>cadbury</brand>
+        <category>dairy</category>
+        <quantity>84</quantity>
+        <revenue>2111.0</revenue>
+    </item>
+    <item>
+        <brand>mrf</brand>
+        <category>tires</category>
+        <quantity>1234</quantity>
+        <revenue>1522756.0</revenue>
+    </item>
+    <item>
+        <brand>trends</brand>
+        <category>clothing</category>
+        <quantity>63</quantity>
+        <revenue>63933.0</revenue>
+    </item>
+</items>

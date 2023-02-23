@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Table(name = "OrderItemsPojo", indexes = {@Index(name = "orderIdIndex", columnList = "orderId")})
+@Table(name = "OrderItemsPojo", uniqueConstraints = {@UniqueConstraint(columnNames = {"orderId", "productId"})}, indexes = {@Index(name = "orderIdIndex", columnList = "orderId")})
 public class OrderItemsPojo extends AbstractPojo{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

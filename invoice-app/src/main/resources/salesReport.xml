@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<items>
+    <fromDate>2023-01-15</fromDate>
+    <toDate>2023-03-15</toDate>
+    <brand>all brands</brand>
+    <category>all categories</category>
+    <item>
+        <brand>pavan</brand>
+        <category>boina</category>
+        <quantity>24</quantity>
+        <revenue>264.0</revenue>
+    </item>
+</items>

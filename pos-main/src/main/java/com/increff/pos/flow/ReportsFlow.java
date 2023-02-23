@@ -111,7 +111,7 @@ public class ReportsFlow {
         return filterReport(report);
     }
 
-    private List<SalesReportData> filterReport(List<SalesReportData> report) {//function to add revenue of a unique pair
+    private List<SalesReportData> filterReport(List<SalesReportData> report) throws ApiException {//function to add revenue of a unique pair
         Map<String, SalesReportData> map = new HashMap<>();
         for (SalesReportData data : report) {
             String pair = data.getBrand() + "/-/" + data.getCategory();
@@ -127,6 +127,9 @@ public class ReportsFlow {
             }
         }
         List<SalesReportData> salesReportDataList = new ArrayList<>(map.values());
+        if (salesReportDataList.size() == 0) {
+            throw new ApiException("No Sales for a given brand category");
+        }
         return salesReportDataList;
     }
 
@@ -224,22 +227,22 @@ public class ReportsFlow {
         return inventoryReportDataList;
     }
 
-    public String getInventoryReportPdf(BrandForm brandForm) throws Exception {
+    public String getInventoryReportPdf(BrandForm brandForm) throws ApiException {
         List<InventoryReportData> inventoryReportDataList = getInventoryReport(brandForm);
         return invoiceClient.generateInventoryReport(convertToInventoryReportXmlList(inventoryReportDataList, brandForm));
     }
 
-    public String getSalesReportPdf(SalesReportForm salesReportForm) throws Exception {
+    public String getSalesReportPdf(SalesReportForm salesReportForm) throws ApiException {
         List<SalesReportData> salesReportDataList = getSalesReport(salesReportForm);
         return invoiceClient.generateSalesReport(convertToSalesReportDataList(salesReportDataList, salesReportForm));
     }
 
-    public String getBrandReportPdf(BrandForm brandForm) throws Exception {
+    public String getBrandReportPdf(BrandForm brandForm) throws ApiException {
         List<BrandReportData> brandReportDataList = getBrandReport(brandForm);
         return invoiceClient.generateBrandReport(convertToBrandReportXmlList(brandReportDataList, brandForm));
     }
 
-    public String getDailyReportPdf(DailyReportForm dailyReportForm) throws Exception {
+    public String getDailyReportPdf(DailyReportForm dailyReportForm) throws ApiException {
         List<DailyReportData> dailyReportDataList = getDailyReport(dailyReportForm);
         return invoiceClient.generateDailyReport(convertToDailyReportXmlList(dailyReportDataList, dailyReportForm));
     }

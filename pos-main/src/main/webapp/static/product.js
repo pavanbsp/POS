@@ -232,7 +232,7 @@ function displayProductList(data){
                 + '<td>' + e.brand + '</td>'
                 + '<td>'  + e.category + '</td>'
                 + '<td>' + e.name + '</td>'
-                + '<td>' + e.mrp + '</td>'
+                + '<td>' + (e.mrp).toFixed(2) + '</td>'
                 + '</tr>';
         }
         else{
@@ -242,7 +242,7 @@ function displayProductList(data){
                 + '<td>' + e.brand + '</td>'
                 + '<td>'  + e.category + '</td>'
                 + '<td>' + e.name + '</td>'
-                + '<td>' + e.mrp + '</td>'
+                + '<td>' + (e.mrp).toFixed(2) + '</td>'
                 + '<td>' + buttonHtml + '</td>'
                 + '</tr>';
         }
@@ -441,6 +441,10 @@ function validateProduct(data) {
 	return true;
 }
 
+function categoryDropdown() {
+
+}
+
 //INITIALIZATION CODE
 function init(){
 	$('#show-add-product').click(displayAddProduct);
@@ -454,6 +458,7 @@ function init(){
     $('#close-add-div').click(closeDivs);
     $('#close-edit-div').click(closeDivs);
     $('#close-upload-div').click(closeDivs);
+    $('#product-add-form').find('#inputBrand').on('change', categoryDropdown);
 }
 
 function closeDivs() {

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<items>
+    <brand>all brands</brand>
+    <category>all categories</category>
+    <datetime>2023-02-22, 09:11:06</datetime>
+    <item>
+        <brand>pavan</brand>
+        <category>boina</category>
+        <name>testname</name>
+        <quantity>12345</quantity>
+    </item>
+    <item>
+        <brand>a</brand>
+        <category>a</category>
+        <name>testname</name>
+        <quantity>99</quantity>
+    </item>
+    <item>
+        <brand>b</brand>
+        <category>b</category>
+        <name>testname</name>
+        <quantity>991</quantity>
+    </item>
+</items>

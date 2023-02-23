@@ -192,7 +192,7 @@ public class ValidateFormUtil {
         if (isNull(salesReportForm.getTo())) {
             throw new ApiException("The to date field can't be null");
         }
-        if (ChronoUnit.DAYS.between(salesReportForm.getFrom(), salesReportForm.getTo()) <= 0) {
+        if (ChronoUnit.DAYS.between(salesReportForm.getFrom(), salesReportForm.getTo()) < 0) {
             throw new ApiException("From date is greater than to date");
         }
     }

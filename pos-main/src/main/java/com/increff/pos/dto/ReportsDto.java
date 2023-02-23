@@ -43,19 +43,19 @@ public class ReportsDto {
         return reportsFlow.getInventoryReport(brandForm);
     }
 
-    public String getInventoryReportPdf(BrandForm brandForm) throws Exception {
+    public String getInventoryReportPdf(BrandForm brandForm) throws ApiException {
         return reportsFlow.getInventoryReportPdf(brandForm);
     }
 
-    public String getSalesReportPdf(SalesReportForm salesReportForm) throws Exception {
+    public String getSalesReportPdf(SalesReportForm salesReportForm) throws ApiException {
         return reportsFlow.getSalesReportPdf(salesReportForm);
     }
 
-    public String getBrandReportPdf(BrandForm brandForm) throws Exception {
+    public String getBrandReportPdf(BrandForm brandForm) throws ApiException {
         return reportsFlow.getBrandReportPdf(brandForm);
     }
 
-    public String getDailyReportPdf(DailyReportForm dailyReportForm) throws Exception {
+    public String getDailyReportPdf(DailyReportForm dailyReportForm) throws ApiException {
         return reportsFlow.getDailyReportPdf(dailyReportForm);
     }
 }

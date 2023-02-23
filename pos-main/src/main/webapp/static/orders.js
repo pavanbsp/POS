@@ -138,8 +138,6 @@ function displayOrderList(data){
     if(add == true){
         $('#orders-table').DataTable({
             order: [[0, 'asc']],
-            pageLength : 5,
-            lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'All']],
             bAutoWidth: false,
             order: [[0, 'asc']],
             aoColumns : [
@@ -156,8 +154,6 @@ function displayOrderList(data){
     if(reload == true) {
          $('#orders-table').DataTable({
     	    order: [[0, 'asc']],
-    	    pageLength : 5,
-    	    lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'All']],
     	    bAutoWidth: false,
     	    order: [[0, 'asc']],
             aoColumns : [
@@ -172,8 +168,6 @@ function displayOrderList(data){
     }
 	$('#orders-table').DataTable({
 	    stateSave: true,
-	    pageLength : 5,
-	    lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'All']],
 	    bAutoWidth: false,
 	    order: [[0, 'asc']],
         aoColumns : [
@@ -272,9 +266,6 @@ function addOrderItemsInitial(event){
 	var $form = $("#orderItemInitial-add-form");
 	var json = toJson($form);
 	const myObj = JSON.parse(json);
-	myObj.sellingPrice = myObj.sellingPrice.toFixed(2);
-    json = JSON.stringify(myObj);
-    console.log(json);
 	if(!validateOrderItem(json)) {
 	    return false;
 	}
@@ -382,9 +373,6 @@ function addOrderItems(event){
 	var $form = $("#orderItem-add-form");
 	var json = toJson($form);
 	const myObj = JSON.parse(json);
-	myObj.sellingPrice = myObj.sellingPrice.toFixed(2);
-	json = JSON.stringify(myObj);
-	console.log(json);
     var id = myObj.orderId;
 	var url = getOrderItemsUrl();
 	if(!validateOrderItem(json)) {
@@ -519,7 +507,7 @@ function displayOrderItemsListInitial(){
     		+ '<td>' + srlNo + '</td>'
     		+ '<td>' + e.barcode + '</td>'
     		+ '<td>' + e.quantity + '</td>'
-    		+ '<td>' + e.quantity*e.sellingPrice + '</td>'
+    		+ '<td>' + (e.quantity*e.sellingPrice).toFixed(2) + '</td>'
     		+ '<td style="display: block ruby";>' + buttonHtml + '</td>'
     		+ '</tr>';
             $tbody.append(row);
@@ -548,7 +536,7 @@ function displayOrderItemsList(data, status){
 		+ '<td>' + e.productName + '</td>'
 		+ '<td>' + e.barcode + '</td>'
 		+ '<td>' + e.quantity + '</td>'
-		+ '<td>' + e.quantity*e.sellingPrice + '</td>'
+		+ '<td>' + (e.quantity*e.sellingPrice).toFixed(2) + '</td>'
 		+ '<td style="display: block ruby;">' + buttonHtml + '</td>'
 		+ '</tr>';
         $tbody.append(row);
@@ -556,14 +544,10 @@ function displayOrderItemsList(data, status){
 	order_items = srlNo;
 	if(status == "Not Invoiced") {
 	    $('#order-item-table').DataTable({
-	        pageLength : 5,
-            lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'All']],
 	    });
 	}
 	else {
 	    $('#order-item-table').DataTable({
-	        pageLength : 5,
-            lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'All']],
             columnDefs: [
                    {
                         target: 5,

@@ -40,7 +40,7 @@ public class OrdersApiController {
 
     @ApiOperation(value = "Gets Invoice PDF by id")
     @RequestMapping(path = "/api/orders/invoice/{orderId}", method = RequestMethod.GET)
-    public String getInvoice(@PathVariable int orderId, HttpServletResponse response) throws Exception {
+    public String getInvoice(@PathVariable int orderId, HttpServletResponse response) throws ApiException {
         return ordersDto.generateInvoicePdf(orderId);
     }
 
@@ -78,8 +78,8 @@ public class OrdersApiController {
 
     @ApiOperation(value = "Updates a orderitems")
     @RequestMapping(path = "/api/orderitems/{id}", method = RequestMethod.PUT)
-    public void updateOrderItem(@PathVariable int id, @RequestBody OrderItemsForm f) throws ApiException {
-        ordersDto.updateOrderItem(id, f);
+    public void updateOrderItem(@PathVariable int id, @RequestBody OrderItemsForm orderItemsForm) throws ApiException {
+        ordersDto.updateOrderItem(id, orderItemsForm);
     }
 
 }

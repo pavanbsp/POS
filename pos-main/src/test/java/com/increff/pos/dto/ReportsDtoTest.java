@@ -46,7 +46,7 @@ public class ReportsDtoTest extends AbstractUnitTest {
     }
 
     @Test
-    public void testInventoryReportPdf() throws Exception {
+    public void testInventoryReportPdf() throws ApiException {
         BrandForm brandForm = GetBrandForm();
         brandDto.addBrand(brandForm);
 
@@ -100,7 +100,7 @@ public class ReportsDtoTest extends AbstractUnitTest {
     }
 
     @Test
-    public void testBrandReportPdf() throws Exception {
+    public void testBrandReportPdf() throws ApiException {
         BrandForm brandForm = GetBrandForm();
         brandDto.addBrand(brandForm);
 
@@ -119,7 +119,7 @@ public class ReportsDtoTest extends AbstractUnitTest {
     }
 
     @Test
-    public void testSalesReportPdf() throws Exception {
+    public void testSalesReportPdf() throws ApiException {
         BrandForm brandForm = GetBrandForm();
         brandDto.addBrand(brandForm);
 
@@ -148,7 +148,7 @@ public class ReportsDtoTest extends AbstractUnitTest {
     }
 
     @Test
-    public void testDailyReportPdf() throws Exception {
+    public void testDailyReportPdf() throws ApiException {
         DailyReportForm dailyReportForm = new DailyReportForm();
         dailyReportForm.setFrom("2012-02-12");
         dailyReportForm.setTo("2024-02-12");

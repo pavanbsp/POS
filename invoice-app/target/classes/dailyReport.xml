@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<items>
+    <fromDate>2012-02-12</fromDate>
+    <toDate>2024-02-12</toDate>
+    <item>
+        <date>2023-02-22</date>
+        <invoiced_items_count>0</invoiced_items_count>
+        <invoiced_orders_count>0</invoiced_orders_count>
+        <total_revenue>0.0</total_revenue>
+    </item>
+</items>

@@ -33,7 +33,7 @@ public class ReportsApiController {
 
     @ApiOperation(value = "Gets sales report pdf")
     @RequestMapping(path = "/api/reports/sales-report/download", method = RequestMethod.POST)
-    public String getSalesReportPdf(@RequestBody SalesReportForm salesReportForm) throws Exception {
+    public String getSalesReportPdf(@RequestBody SalesReportForm salesReportForm) throws ApiException {
         return reportsDto.getSalesReportPdf(salesReportForm);
     }
 
@@ -45,7 +45,7 @@ public class ReportsApiController {
 
     @ApiOperation(value = "Gets PDF of daily report")
     @RequestMapping(path = "/api/reports/dailyReport/download", method = RequestMethod.POST)
-    public String getDailyReportPdf(@RequestBody DailyReportForm dailyReportForm) throws Exception {
+    public String getDailyReportPdf(@RequestBody DailyReportForm dailyReportForm) throws ApiException {
         return reportsDto.getDailyReportPdf(dailyReportForm);
     }
 
@@ -57,7 +57,7 @@ public class ReportsApiController {
 
     @ApiOperation(value = "Gets PDF of inventory report")
     @RequestMapping(path = "/api/reports/inventoryReport/download", method = RequestMethod.POST)
-    public String getInventoryReportPdf(@RequestBody BrandForm brandForm) throws Exception {
+    public String getInventoryReportPdf(@RequestBody BrandForm brandForm) throws ApiException {
         return reportsDto.getInventoryReportPdf(brandForm);
     }
 
@@ -69,7 +69,7 @@ public class ReportsApiController {
 
     @ApiOperation(value = "Gets PDF of brand report")
     @RequestMapping(path = "/api/reports/brandReport/download", method = RequestMethod.POST)
-    public String getBrandReportPdf(@RequestBody BrandForm brandForm) throws Exception {
+    public String getBrandReportPdf(@RequestBody BrandForm brandForm) throws ApiException {
         return reportsDto.getBrandReportPdf(brandForm);
     }
 }

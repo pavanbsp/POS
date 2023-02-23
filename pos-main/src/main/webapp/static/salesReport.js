@@ -152,7 +152,7 @@ function disableDate() {
 
 function initialize_date() {
     var date = new Date();
-    var today = new Date(new Date().setDate(date.getDate()));
+    var today = new Date(new Date().setDate(date.getDate() + 1));
     var last = new Date(new Date().setDate(date.getDate() - 30));
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -168,7 +168,7 @@ function initialize_date() {
 
     var toDate = document.getElementById("toDate");
     var fromDate = document.getElementById("fromDate");
-    var tomorrow = new Date(date.getTime());
+    var tomorrow = new Date(date.getTime() + + 24 * 60 * 60 * 1000);
     var minDate = tomorrow.toISOString().split('T')[0];
     toDate.setAttribute("max", minDate);
     fromDate.setAttribute("max", minDate);

@@ -8,7 +8,7 @@ html, body {
   height: 100%;
 }
 
-#brandFilecategory,#productFilecategory,#inventoryFileName {
+#brandFileName,#productFileName,#inventoryFileName {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space:nowrap;

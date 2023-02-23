@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<items>
+    <order_id>164</order_id>
+    <datetime>2023-02-22 13:38</datetime>
+    <total>21000.0</total>
+    <item>
+        <name>chocolates</name>
+        <mrp>100.0</mrp>
+        <quantity>100</quantity>
+    </item>
+    <item>
+        <name>arogya</name>
+        <mrp>100.0</mrp>
+        <quantity>100</quantity>
+    </item>
+    <item>
+        <name>kitkat</name>
+        <mrp>10.0</mrp>
+        <quantity>100</quantity>
+    </item>
+</items>

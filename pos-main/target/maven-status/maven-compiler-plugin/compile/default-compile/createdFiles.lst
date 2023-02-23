@@ -13,7 +13,6 @@ com\increff\pos\helper\DailyReportHelper.class
 com\increff\pos\dto\InventoryDto.class
 com\increff\pos\helper\OrdersHelper.class
 com\increff\pos\api\DailyReportApi.class
-com\increff\pos\controller\SignupController.class
 com\increff\pos\model\data\DailyReportData.class
 com\increff\pos\controller\ReportsApiController.class
 com\increff\pos\flow\DailyReportFlow.class
@@ -36,7 +35,6 @@ com\increff\pos\pojo\OrdersPojo.class
 com\increff\pos\api\BrandApi.class
 com\increff\pos\util\NormalizeFormUtil.class
 com\increff\pos\controller\ProductApiController.class
-com\increff\pos\controller\LoginController.class
 com\increff\pos\model\data\InfoData.class
 com\increff\pos\helper\ProductHelper.class
 com\increff\pos\controller\InventoryApiController.class
@@ -80,6 +78,7 @@ com\increff\pos\dto\UserDto.class
 com\increff\pos\helper\ReportsHelper.class
 com\increff\pos\dao\BrandDao.class
 com\increff\pos\flow\InventoryFlow.class
+com\increff\pos\controller\SessionController.class
 com\increff\pos\model\form\ProductForm.class
 com\increff\pos\model\form\DailyReportForm.class
 com\increff\pos\api\InventoryApi.class

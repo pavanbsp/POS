@@ -26,7 +26,6 @@ public abstract class AbstractUiController {
         // Get current user
         UserPrincipal principal = SecurityUtil.getPrincipal();
         String email = principal == null ? "" : principal.getEmail();
-        info.setEmail(email);
         //getting all the admin emails
         String[] adminEmails = adminEmail.split(",");
         //set the role
@@ -36,6 +35,7 @@ public abstract class AbstractUiController {
         } else {
             role = "operator";
         }
+        info.setEmail(email+"("+role+")");
         // Set info
         ModelAndView mav = new ModelAndView(page);
         mav.addObject("info", info);
